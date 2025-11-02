@@ -49,13 +49,18 @@ class InfoCard extends StatelessWidget {
 // Card tombol dengan ikon dan teks
 class ItemCard extends StatelessWidget {
   final ItemHomepage item;
+  final int index;
 
-  const ItemCard(this.item, {super.key});
+  const ItemCard(this.item, this.index, {super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Define colors for each button
+    List<Color> colors = [Colors.blue, Colors.green, Colors.red];
+    Color buttonColor = colors[index % colors.length];
+
     return Material(
-      color: Theme.of(context).colorScheme.secondary,
+      color: buttonColor,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         onTap: () {
@@ -63,7 +68,7 @@ class ItemCard extends StatelessWidget {
             ..hideCurrentSnackBar()
             ..showSnackBar(
               SnackBar(
-                content: Text("Kamu telah menekan tombol ${item.name}!"),
+                content: Text("Kamu telah menekan tombol ${item.name}"),
               ),
             );
         },
@@ -107,9 +112,9 @@ class MyHomePage extends StatelessWidget {
 
   // Daftar tombol di halaman utama
   final List<ItemHomepage> items = [
-    ItemHomepage("See Football News", Icons.newspaper),
-    ItemHomepage("Add News", Icons.add),
-    ItemHomepage("Logout", Icons.logout),
+    ItemHomepage("All Products", Icons.inventory),
+    ItemHomepage("My Products", Icons.person),
+    ItemHomepage("Create Product", Icons.add),
   ];
 
   @override
@@ -117,7 +122,7 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Football News',
+          'Football Shop',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -149,7 +154,7 @@ class MyHomePage extends StatelessWidget {
                   const Padding(
                     padding: EdgeInsets.only(top: 16.0),
                     child: Text(
-                      'Selamat datang di Football News',
+                      'Selamat datang di Football Shop',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18.0,
@@ -165,8 +170,10 @@ class MyHomePage extends StatelessWidget {
                     mainAxisSpacing: 10,
                     crossAxisCount: 3,
                     shrinkWrap: true,
-                    children: items.map((ItemHomepage item) {
-                      return ItemCard(item);
+                    children: items.asMap().entries.map((entry) {
+                      int index = entry.key;
+                      ItemHomepage item = entry.value;
+                      return ItemCard(item, index);
                     }).toList(),
                   ),
                 ],

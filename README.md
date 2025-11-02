@@ -1,16 +1,49 @@
-# football_news
+JAWABAN README TUGAS 1 FLUTTER :
 
-A new Flutter project.
+1. Widget Tree pada Flutter
+Widget tree adalah struktur hierarki yang membentuk UI aplikasi Flutter. Setiap widget dapat memiliki child widget, dan hubungan parent-child bekerja dengan cara parent widget mengatur layout dan properti untuk child-nya. Misalnya, Scaffold sebagai parent dapat memiliki AppBar dan body sebagai child, di mana body sendiri bisa berisi Column yang memiliki beberapa Text atau Button sebagai child-nya.
 
-## Getting Started
+2. Widget yang Digunakan dalam Proyek Ini
+- MaterialApp: Widget root yang menyediakan tema Material Design dan navigasi
+- Scaffold: Struktur dasar halaman dengan AppBar, body, dan floating action button
+- AppBar: Bilah aplikasi di bagian atas dengan judul
+- Padding: Menambahkan padding di sekitar widget child
+- Column: Mengatur widget child secara vertikal
+- Row: Mengatur widget child secara horizontal
+- Card: Kontainer dengan elevasi dan sudut melengkung
+- Text: Menampilkan teks dengan styling
+- Icon: Menampilkan ikon dari Material Icons
+- GridView.count: Menampilkan widget dalam grid dengan jumlah kolom tertentu
+- Material: Memberikan efek material dengan warna dan border radius
+- InkWell: Membuat area yang dapat diklik dengan efek ripple
+- Container: Kontainer yang dapat dikustomisasi dengan padding, margin, dll.
+- Center: Memusatkan widget child
+- SizedBox: Memberikan jarak antar widget
+- SnackBar: Menampilkan pesan sementara di bagian bawah layar
 
-This project is a starting point for a Flutter application.
+3. Fungsi Widget MaterialApp
+MaterialApp adalah widget root yang sering digunakan karena menyediakan konfigurasi dasar aplikasi Material Design. Fungsi utamanya adalah:
+- Mengatur tema aplikasi (warna, font, dll.)
+- Mengelola routing dan navigasi
+- Menyediakan lokalization
+- Mengatur judul aplikasi
+- Memberikan akses ke BuildContext global
 
-A few resources to get you started if this is your first Flutter project:
+4. Perbedaan StatelessWidget dan StatefulWidget
+- StatelessWidget: Widget yang tidak memiliki state internal. UI-nya hanya bergantung pada konfigurasi yang diberikan saat konstruksi. Cocok untuk widget statis seperti ikon, teks, atau layout yang tidak berubah.
+- StatefulWidget: Widget yang memiliki state internal yang dapat berubah selama lifetime widget. Memiliki objek State terpisah yang menyimpan data yang dapat berubah. Digunakan ketika UI perlu diperbarui berdasarkan interaksi user atau data yang berubah.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+5. BuildContext
+BuildContext adalah objek yang menyediakan informasi tentang lokasi widget dalam widget tree. Penting karena:
+- Digunakan untuk mengakses tema, media query, dan ancestor widget
+- Diperlukan untuk operasi seperti navigasi, menampilkan dialog, atau mengakses provider
+- Dalam metode build, BuildContext digunakan untuk mendapatkan informasi tentang constraints layout dan konfigurasi tema
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+6. Hot Reload vs Hot Restart
+- Hot Reload: Memuat ulang kode yang diubah tanpa kehilangan state aplikasi. Hanya memperbarui widget tree yang terpengaruh, sehingga aplikasi tetap berjalan dengan data yang sama. Lebih cepat dan cocok untuk perubahan UI.
+- Hot Restart: Melakukan restart penuh aplikasi, menghapus semua state dan memuat ulang dari awal. Lebih lambat tapi memastikan semua perubahan diterapkan dengan benar, terutama untuk perubahan pada main() atau konfigurasi global.
+
+
+Tirta Rendy Siahaan
+2406355621
+PBP C
