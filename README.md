@@ -47,3 +47,26 @@ BuildContext adalah objek yang menyediakan informasi tentang lokasi widget dalam
 Tirta Rendy Siahaan
 2406355621
 PBP C
+
+JAWABAN README.md untuk TUGAS 2:
+
+1. Jelaskan perbedaan antara Navigator.push() dan Navigator.pushReplacement() pada Flutter. Dalam kasus apa sebaiknya masing-masing digunakan pada aplikasi Football Shop kamu?
+
+Navigator.push() digunakan untuk menambahkan halaman baru ke stack navigasi, sehingga pengguna dapat kembali ke halaman sebelumnya dengan tombol back. Navigator.pushReplacement() menggantikan halaman saat ini dengan halaman baru tanpa menyimpannya di stack, sehingga tidak dapat kembali. Pada aplikasi Football Shop, saya menggunakan Navigator.push() untuk navigasi dari halaman utama ke halaman tambah produk karena pengguna mungkin ingin kembali. Navigator.pushReplacement() akan berguna jika ada skenario seperti setelah menyimpan produk berhasil, langsung kembali ke halaman utama tanpa bisa kembali ke form yang sudah tidak relevan.
+
+2. Bagaimana kamu memanfaatkan hierarchy widget seperti Scaffold, AppBar, dan Drawer untuk membangun struktur halaman yang konsisten di seluruh aplikasi?
+
+Saya memanfaatkan Scaffold sebagai fondasi setiap halaman untuk struktur yang konsisten. AppBar ditempatkan di bagian atas untuk judul dan navigasi, sementara Drawer menyediakan menu samping. Pada halaman utama, Scaffold berisi AppBar dengan judul "Football Shop", body dengan Padding dan Column yang menampung InfoCard serta GridView untuk tombol-tombol, dan Drawer dengan ListTile untuk "Halaman Utama" dan "Tambah Produk". Pada halaman tambah produk, Scaffold memiliki AppBar dengan judul "Add New Product" dan body dengan Padding serta Form yang berisi ListView untuk elemen input. Hierarki ini menciptakan konsistensi visual dan memudahkan pemeliharaan kode.
+
+3. Dalam konteks desain antarmuka, apa kelebihan menggunakan layout widget seperti Padding, SingleChildScrollView, dan ListView saat menampilkan elemen-elemen form? Berikan contoh penggunaannya dari aplikasi kamu.
+
+Padding memberikan ruang yang tepat antar elemen untuk meningkatkan keterbacaan dan menghindari tampilan yang terlalu padat. SingleChildScrollView memungkinkan konten panjang di-scroll tanpa error overflow, ideal untuk layar kecil. ListView efisien untuk menampilkan daftar elemen yang dapat diperluas dengan performa optimal. Pada aplikasi Football Shop, Padding digunakan di body halaman utama (EdgeInsets.all(16.0)) dan form tambah produk untuk spacing konsisten. SingleChildScrollView membungkus Form pada halaman tambah produk agar dapat di-scroll jika konten melebihi layar. ListView digunakan dalam Form untuk menyusun TextFormField, DropdownButtonFormField, dan SwitchListTile secara vertikal.
+
+4. Bagaimana kamu menyesuaikan warna tema agar aplikasi Football Shop memiliki identitas visual yang konsisten dengan brand toko?
+
+Saya menyesuaikan tema melalui MaterialApp dengan ThemeData menggunakan ColorScheme.fromSwatch(primarySwatch: Colors.blue).copyWith(secondary: Colors.blueAccent[400]), menciptakan nuansa biru yang konsisten. Tema ini diterapkan global pada AppBar (backgroundColor: Theme.of(context).colorScheme.primary), tombol-tombol (ElevatedButton), dan Drawer header (BoxDecoration(color: Colors.blue)). Pendekatan ini memastikan identitas visual koheren di seluruh aplikasi, dengan warna biru yang mencerminkan kesegaran dan kepercayaan, tanpa perlu pengaturan manual pada setiap widget.
+
+
+Tirta Rendy Siahaan
+2406355621
+PBP C
