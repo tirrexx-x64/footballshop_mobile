@@ -1,227 +1,87 @@
 import 'package:flutter/material.dart';
 import 'package:football_shop/add_product.dart';
+import 'package:football_shop/login.dart';
+import 'package:football_shop/screens/product_entry_list.dart';
+import 'package:football_shop/widgets/left_drawer.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
-// ======================================================
-// Class ItemHomepage
-// ======================================================
-// Menyimpan data untuk setiap tombol card (name dan icon)
-class ItemHomepage {
-  final String name;
-  final IconData icon;
-
-  ItemHomepage(this.name, this.icon);
-}
-
-// ======================================================
-// Class InfoCard
-// ======================================================
-// Kartu informasi sederhana untuk menampilkan NPM, Nama, dan Kelas.
-class InfoCard extends StatelessWidget {
-  final String title;   // Judul kartu
-  final String content; // Isi kartu
-
-  const InfoCard({super.key, required this.title, required this.content});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 2.0,
-      child: Container(
-        width: MediaQuery.of(context).size.width / 3.5,
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Text(
-              title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8.0),
-            Text(content),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// ======================================================
-// Class ItemCard
-// ======================================================
-// Card tombol dengan ikon dan teks
-class ItemCard extends StatelessWidget {
-  final ItemHomepage item;
-  final int index;
-
-  const ItemCard(this.item, this.index, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // Define colors for each button
-    List<Color> colors = [Colors.blue, Colors.green, Colors.red];
-    Color buttonColor = colors[index % colors.length];
-
-    return Material(
-      color: buttonColor,
-      borderRadius: BorderRadius.circular(12),
-      child: InkWell(
-        onTap: () {
-          if (item.name == "Create Product") {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const AddProductPage()),
-            );
-          } else {
-            ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                SnackBar(
-                  content: Text("Kamu telah menekan tombol ${item.name}"),
-                ),
-              );
-          }
-        },
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  item.icon,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-                const Padding(padding: EdgeInsets.all(3)),
-                Text(
-                  item.name,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// ======================================================
-// Class MyHomePage
-// ======================================================
-// Halaman utama aplikasi yang menampilkan InfoCard dan ItemCard
 class MyHomePage extends StatelessWidget {
   MyHomePage({super.key});
 
-  // Data pribadi
-  final String nama = "Tirta Rendy Siahaan";
-  final String npm = "2406355621";
-  final String kelas = "C";
-
-  // Daftar tombol di halaman utama
-  final List<ItemHomepage> items = [
-    ItemHomepage("All Products", Icons.inventory),
-    ItemHomepage("My Products", Icons.person),
-    ItemHomepage("Create Product", Icons.add),
+  final List<ItemHomepage> items = const [
+    ItemHomepage(
+      name: 'All Products',
+      icon: Icons.inventory_2,
+      color: Color(0xff59A5D8),
+    ),
+    ItemHomepage(
+      name: 'My Products',
+      icon: Icons.person,
+      color: Color(0xff4CAF50),
+    ),
+    ItemHomepage(
+      name: 'Create Product',
+      icon: Icons.add,
+      color: Color(0xffE57373),
+    ),
+    ItemHomepage(
+      name: 'Logout',
+      icon: Icons.logout,
+      color: Color(0xff9E9E9E),
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Football Shop',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: const Text('Football Shop'),
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'Football Shop Menu',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Halaman Utama'),
-              onTap: () {
-                Navigator.pop(context); // Close the drawer
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.add),
-              title: const Text('Tambah Produk'),
-              onTap: () {
-                Navigator.pop(context); // Close the drawer
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const AddProductPage()),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: const LeftDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Baris InfoCard
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                InfoCard(title: 'NPM', content: npm),
-                InfoCard(title: 'Name', content: nama),
-                InfoCard(title: 'Class', content: kelas),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                _InfoCard(
+                  title: 'NPM',
+                  value: '2406355621',
+                ),
+                _InfoCard(
+                  title: 'Name',
+                  value: 'Tirta Rendy Siahaan',
+                ),
+                _InfoCard(
+                  title: 'Class',
+                  value: 'C',
+                ),
               ],
             ),
-
-            const SizedBox(height: 16.0),
-
-            // Konten utama
-            Center(
-              child: Column(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top: 16.0),
-                    child: Text(
-                      'Selamat datang di Football Shop',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
-                      ),
-                    ),
-                  ),
-
-                  // Grid tombol
-                  GridView.count(
-                    primary: true,
-                    padding: const EdgeInsets.all(20),
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    crossAxisCount: 3,
-                    shrinkWrap: true,
-                    children: items.asMap().entries.map((entry) {
-                      int index = entry.key;
-                      ItemHomepage item = entry.value;
-                      return ItemCard(item, index);
-                    }).toList(),
-                  ),
-                ],
+            const SizedBox(height: 24),
+            const Center(
+              child: Text(
+                'Selamat datang di Football Shop',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            Expanded(
+              child: GridView.count(
+                crossAxisCount: 2,
+                mainAxisSpacing: 16,
+                crossAxisSpacing: 16,
+                children: items
+                    .map(
+                      (item) => ItemCard(item: item),
+                    )
+                    .toList(),
               ),
             ),
           ],
@@ -230,3 +90,167 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
+
+class ItemHomepage {
+  final String name;
+  final IconData icon;
+  final Color color;
+
+  const ItemHomepage({
+    required this.name,
+    required this.icon,
+    required this.color,
+  });
+}
+
+class ItemCard extends StatelessWidget {
+  final ItemHomepage item;
+
+  const ItemCard({super.key, required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
+
+    return Material(
+      color: item.color,
+      borderRadius: BorderRadius.circular(12),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: () async {
+          if (item.name == 'All Products') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ProductEntryListPage(
+                  onlyMyProducts: false,
+                ),
+              ),
+            );
+          } else if (item.name == 'My Products') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ProductEntryListPage(
+                  onlyMyProducts: true,
+                ),
+              ),
+            );
+          } else if (item.name == 'Create Product') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AddProductPage(),
+              ),
+            );
+          } else if (item.name == 'Logout') {
+            // TODO: Replace the URL with your app's URL and don't forget to add a trailing slash (/)
+            // Android emulator: http://10.0.2.2:8000/
+            // Chrome/web: http://localhost:8000/
+            final response = await request.logout(
+              'https://tirta-rendy-footballshops.pbp.cs.ui.ac.id/auth/logout/',
+            );
+            final String message = response['message'] ?? '';
+
+            if (context.mounted) {
+              if (response['status'] == true) {
+                final String uname = response['username'] ?? '';
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('$message See you again, $uname.'),
+                  ),
+                );
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginPage(),
+                  ),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(message),
+                  ),
+                );
+              }
+            }
+          }
+        },
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  item.icon,
+                  size: 40,
+                  color: Colors.white,
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  item.name,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _InfoCard extends StatelessWidget {
+  final String title;
+  final String value;
+
+  const _InfoCard({
+    required this.title,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 4.0),
+        padding: const EdgeInsets.all(12.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              value,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+

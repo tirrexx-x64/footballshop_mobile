@@ -60,16 +60,16 @@ class Fields {
   });
 
   factory Fields.fromJson(Map<String, dynamic> json) => Fields(
-        user: json["user"],
-        name: json["name"],
-        price: json["price"],
-        description: json["description"],
-        thumbnail: json["thumbnail"],
-        category: json["category"],
-        isFeatured: json["is_featured"],
-        stock: json["stock"],
-        brand: json["brand"],
-        createdAt: DateTime.parse(json["created_at"]),
+        user: json["user"] != null ? (json["user"] is int ? json["user"] : int.tryParse(json["user"].toString()) ?? 0) : 0,
+        name: json["name"] ?? "",
+        price: json["price"] != null ? (json["price"] is int ? json["price"] : int.tryParse(json["price"].toString()) ?? 0) : 0,
+        description: json["description"] ?? "",
+        thumbnail: json["thumbnail"] ?? "",
+        category: json["category"] ?? "",
+        isFeatured: json["is_featured"] ?? false,
+        stock: json["stock"] != null ? (json["stock"] is int ? json["stock"] : int.tryParse(json["stock"].toString()) ?? 0) : 0,
+        brand: json["brand"] ?? "",
+        createdAt: json["created_at"] != null ? DateTime.parse(json["created_at"]) : DateTime.now(),
       );
 
   Map<String, dynamic> toJson() => {

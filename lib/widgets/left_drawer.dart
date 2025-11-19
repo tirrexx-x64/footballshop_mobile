@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:football_shop/menu.dart';
 import 'package:football_shop/screens/product_entry_list.dart';
 
 class LeftDrawer extends StatelessWidget {
@@ -27,8 +28,12 @@ class LeftDrawer extends StatelessWidget {
             leading: const Icon(Icons.home),
             title: const Text('Home'),
             onTap: () {
-              // Kembali ke halaman sebelumnya / tutup drawer
-              Navigator.pop(context);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyHomePage(),
+                ),
+              );
             },
           ),
           ListTile(

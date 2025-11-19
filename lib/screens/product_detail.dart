@@ -42,7 +42,7 @@ class ProductDetailPage extends StatelessWidget {
           children: [
             if (fields.thumbnail.isNotEmpty)
               Image.network(
-                'http://localhost:8000/proxy-image/?url=${Uri.encodeComponent(fields.thumbnail)}',
+                'https://tirta-rendy-footballshops.pbp.cs.ui.ac.id/proxy-image/?url=${Uri.encodeComponent(fields.thumbnail)}',
                 width: double.infinity,
                 height: 250,
                 fit: BoxFit.cover,
@@ -154,6 +154,20 @@ class ProductDetailPage extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      const Icon(Icons.person, size: 16),
+                      const SizedBox(width: 4),
+                      Text(
+                        'User ID: ${fields.user}',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[800],
+                        ),
+                      ),
+                    ],
+                  ),
                   const Divider(height: 32),
                   Text(
                     fields.description,
@@ -164,6 +178,14 @@ class ProductDetailPage extends StatelessWidget {
                     textAlign: TextAlign.justify,
                   ),
                   const SizedBox(height: 24),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.arrow_back),
+                    label: const Text('Back to Product List'),
+                  ),
+                  const SizedBox(height: 8),
                 ],
               ),
             ),
@@ -173,4 +195,3 @@ class ProductDetailPage extends StatelessWidget {
     );
   }
 }
-

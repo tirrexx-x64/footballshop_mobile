@@ -4,11 +4,17 @@ import 'package:football_shop/models/product.dart';
 class ProductEntryCard extends StatelessWidget {
   final Product product;
   final VoidCallback onTap;
+  final int? currentUserId;
+  final VoidCallback? onEdit;
+  final VoidCallback? onDelete;
 
   const ProductEntryCard({
     super.key,
     required this.product,
     required this.onTap,
+    this.currentUserId,
+    this.onEdit,
+    this.onDelete,
   });
 
   @override
@@ -88,6 +94,26 @@ class ProductEntryCard extends StatelessWidget {
                       color: Colors.amber,
                       fontWeight: FontWeight.bold,
                     ),
+                  ),
+                // Edit and Delete buttons if owner
+                if (currentUserId != null && currentUserId == fields.user)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      if (onEdit != null)
+                        TextButton.icon(
+                          onPressed: onEdit,
+                          icon: const Icon(Icons.edit, size: 16),
+                          label: const Text('Edit'),
+                        ),
+                      if (onDelete != null)
+                        TextButton.icon(
+                          onPressed: onDelete,
+                          icon: const Icon(Icons.delete, size: 16),
+                          label: const Text('Delete'),
+                          style: TextButton.styleFrom(foregroundColor: Colors.red),
+                        ),
+                    ],
                   ),
               ],
             ),

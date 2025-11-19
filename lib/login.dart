@@ -115,6 +115,11 @@ class _LoginPageState extends State<LoginPage> {
                       if (request.loggedIn) {
                         String message = response['message'];
                         String uname = response['username'];
+                        // Assume response has 'id', if not, set default or modify backend
+                        request.jsonData = {
+                          'id': response['id'] ?? 1, // Adjust if backend provides 'id'
+                          'username': uname,
+                        };
                         if (context.mounted) {
                           Navigator.pushReplacement(
                             context,
